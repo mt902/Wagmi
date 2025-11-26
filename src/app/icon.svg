@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE0EC"/>
+      <stop offset="50%" stop-color="#E8F5F0"/>
+      <stop offset="100%" stop-color="#E8E0F0"/>
+    </linearGradient>
+    <linearGradient id="sparkleGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF809C"/>
+      <stop offset="100%" stop-color="#FFB3C4"/>
+    </linearGradient>
+    <linearGradient id="sparkleGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3C0"/>
+      <stop offset="100%" stop-color="#B4E8D8"/>
+    </linearGradient>
+    <linearGradient id="sparkleGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B4A7D6"/>
+      <stop offset="100%" stop-color="#D4CCE8"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background rounded rectangle -->
+  <rect x="4" y="4" width="56" height="56" rx="14" ry="14" fill="url(#bgGrad)"/>
+  
+  <!-- Main sparkle (center-right) -->
+  <path d="M38 20 L40 28 L48 30 L40 32 L38 40 L36 32 L28 30 L36 28 Z" fill="url(#sparkleGrad1)"/>
+  
+  <!-- Secondary sparkle (top-left) -->
+  <path d="M20 14 L21.5 19 L26.5 20.5 L21.5 22 L20 27 L18.5 22 L13.5 20.5 L18.5 19 Z" fill="url(#sparkleGrad2)"/>
+  
+  <!-- Tertiary sparkle (bottom-left) -->
+  <path d="M22 38 L23.5 43 L28.5 44.5 L23.5 46 L22 51 L20.5 46 L15.5 44.5 L20.5 43 Z" fill="url(#sparkleGrad3)"/>
+  
+  <!-- Small dot accents -->
+  <circle cx="46" cy="46" r="3" fill="#FFD93D" opacity="0.8"/>
+  <circle cx="50" cy="18" r="2" fill="#87CEEB" opacity="0.7"/>
+</svg>
+

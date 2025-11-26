@@ -2,32 +2,28 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Asset Preference Profiler | Discover Your Prediction Style",
+  title: {
+    default: "Wagmi Interactive Demos",
+    template: "%s · Wagmi Interactive Demos",
+  },
   description:
-    "A quick, no-right-answer profiler to match you with the markets you're naturally aligned with. Find out if you're a Meme Hunter, Layer2 Explorer, AI Theorist, or more!",
-  keywords: [
-    "prediction",
-    "trading style",
-    "personality test",
-    "crypto",
-    "markets",
-    "meme coins",
-    "Layer 2",
-    "AI",
-    "sports betting",
-  ],
-  authors: [{ name: "PreDiva" }],
+    "A demo collection of interactive web3 mechanics: asset preference profiling and memecoin playoffs for prediction markets.",
   openGraph: {
-    title: "Asset Preference Profiler",
+    title: "Wagmi Interactive Demos",
     description:
-      "Discover your prediction style - which markets are you naturally aligned with?",
+      "Explore interactive web3 mechanics: discover your prediction style with the Asset Preference Profiler and play the Memecoin Playoffs tournament.",
+    url: "https://wagmi.ad",
+    siteName: "Wagmi Interactive Demos",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Asset Preference Profiler",
+    title: "Wagmi Interactive Demos",
     description:
-      "Discover your prediction style - which markets are you naturally aligned with?",
+      "Interactive web3 mechanics for prediction markets: profiling and playoffs experiences.",
+  },
+  icons: {
+    icon: "/icon.svg",
   },
 };
 
@@ -50,4 +46,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -1,4 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Wagmi Interactive Demos",
+  description:
+    "Explore a small collection of interactive web3 mechanics built for prediction markets: Asset Preference Profiler and Memecoin Playoffs.",
+  openGraph: {
+    title: "Wagmi Interactive Demos",
+    description:
+      "Choose between an Asset Preference Profiler that maps your prediction style to markets, or a Memecoin Playoffs tournament that lets you pick winners in head-to-head brackets.",
+    url: "https://wagmi.ad",
+    siteName: "Wagmi Interactive Demos",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wagmi Interactive Demos",
+    description:
+      "A hub of interactive web3 mechanics designed for prediction markets and community engagement.",
+  },
+};
 
 export default function Home() {
   return (
