@@ -62,23 +62,38 @@ export default function Home() {
             </svg>
           </Link>
 
-          {/* Playoff Tournament (Coming Soon) */}
-          <div className="w-full flex items-center justify-between bg-gray-50/80 backdrop-blur-sm border-2 border-gray-100 rounded-2xl p-5 opacity-60 cursor-not-allowed">
+          {/* Playoff Tournament */}
+          <Link
+            href="/demo/playoff"
+            className="group w-full flex items-center justify-between bg-white/80 backdrop-blur-sm border-2 border-gray-100 rounded-2xl p-5 shadow-soft hover:shadow-card hover:border-accent-butter hover:bg-white transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
-                <span className="text-2xl grayscale">🏆</span>
+              <div className="w-12 h-12 bg-gradient-to-br from-amber-100 to-yellow-200 rounded-xl flex items-center justify-center">
+                <span className="text-2xl">🏆</span>
               </div>
               <div className="text-left">
-                <h2 className="font-semibold text-gray-500">
+                <h2 className="font-semibold text-gray-800 group-hover:text-amber-600 transition-colors">
                   Playoff Tournament
                 </h2>
-                <p className="text-sm text-gray-400">Coming soon</p>
+                <p className="text-sm text-gray-400">
+                  Pick your memecoin champion
+                </p>
               </div>
             </div>
-            <span className="text-xs font-medium text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
-              Soon
-            </span>
-          </div>
+            <svg
+              className="w-5 h-5 text-gray-300 group-hover:text-amber-400 group-hover:translate-x-1 transition-all"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </Link>
         </div>
 
         {/* Footer */}
