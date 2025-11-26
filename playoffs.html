@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memecoin Playoffs | PreDiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --bg-light: #f5f5f5;
+            --bg-card: #f0f0f0;
+            --text-dark: #1a1a1a;
+            --text-body: #444444;
+            --text-muted: #888888;
+            --accent-blue: #3b5cff;
+            --accent-green: #22c55e;
+            --accent-gold: #f59e0b;
+            --border-light: #d0d0d0;
+            --line-color: #c0c0c0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo { font-size: 14px; color: var(--text-muted); }
+        .logo span { font-weight: 600; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase; }
+        .round-indicator { font-size: 14px; color: var(--text-muted); }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+        .screen { display: none; animation: fadeIn 0.4s ease; }
+        .screen.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Intro Screen */
+        .intro-screen { text-align: center; padding: 40px 20px 60px; }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 160px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-coin {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            animation: heroBounce 2s ease-in-out infinite;
+        }
+        .hero-coin.left { background: linear-gradient(135deg, #fef3c7, #fcd34d); box-shadow: 0 6px 25px rgba(251, 191, 36, 0.4); }
+        .hero-coin.right { background: linear-gradient(135deg, #dbeafe, #93c5fd); box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4); animation-delay: 0.3s; }
+
+        @keyframes heroBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+        .hero-vs {
+            width: 44px; height: 44px; margin: 0 20px;
+            border-radius: 50%;
+            background: var(--text-dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-style: italic;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-trophy {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+        }
+
+        .intro-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .intro-subtitle {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(18px, 3vw, 28px);
+            font-style: italic;
+            color: var(--text-dark);
+            margin-bottom: 28px;
+        }
+
+        .intro-description {
+            font-size: 16px;
+            color: var(--text-body);
+            margin-bottom: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .intro-subtext {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 460px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-features {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        .intro-feature-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .start-btn {
+            font-size: 15px;
+            font-weight: 500;
+            padding: 15px 40px;
+            background: var(--text-dark);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+        }
+
+        .start-btn:hover { background: #333; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+        /* Match Screen */
+        .match-screen { padding: 10px 20px; }
+
+        .match-header { text-align: center; margin-bottom: 24px; }
+
+        .match-round {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .match-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 26px;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .match-number { font-size: 13px; color: var(--text-muted); }
+
+        .vs-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .vs-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .coin-card {
+            width: 240px;
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 18px 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 2px solid transparent;
+        }
+
+        .coin-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .coin-card.selected { border-color: var(--text-dark); background: white; }
+
+        .coin-img-wrapper { margin: 0 auto 12px; }
+        .coin-img-wrapper img { border-radius: 50%; border: 2px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .coin-emoji-fallback { background: white !important; border: 2px solid white !important; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+
+        .coin-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .coin-ticker {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .coin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+
+        .coin-stat {
+            background: white;
+            padding: 7px 5px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .stat-value { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+        .stat-value.positive { color: #22c55e; }
+        .stat-value.negative { color: #ef4444; }
+
+        /* ========================================
+           TOURNAMENT BRACKET - Traditional Layout
+           ======================================== */
+        .bracket-section {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .bracket-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .tournament-bracket {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 900px;
+            padding: 10px 0;
+        }
+
+        /* Each round column */
+        .bracket-round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .bracket-round-header {
+            text-align: center;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            height: 16px;
+        }
+
+        /* Match boxes */
+        .bracket-match-box {
+            background: white;
+            border: 1.5px solid var(--border-light);
+            border-radius: 6px;
+            width: 90px;
+            margin: 4px 0;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .bracket-match-box.current {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(59, 92, 255, 0.2);
+        }
+
+        .bracket-match-box.completed {
+            border-color: var(--accent-green);
+        }
+
+        .bracket-team {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 6px;
+            font-size: 9px;
+            font-weight: 500;
+            color: var(--text-body);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .bracket-team:last-child { border-bottom: none; }
+
+        .bracket-team.winner { background: rgba(34, 197, 94, 0.1); color: var(--accent-green); }
+        .bracket-team.loser { opacity: 0.35; text-decoration: line-through; }
+        .bracket-team.empty { color: #bbb; font-style: italic; }
+
+        .bracket-team-icon {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+        }
+
+        .bracket-team-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+        /* Connector lines */
+        .bracket-round-r16 .bracket-match-box { margin: 2px 0; }
+        .bracket-round-qf .bracket-match-box { margin: 24px 0; }
+        .bracket-round-sf .bracket-match-box { margin: 70px 0; }
+
+        .bracket-connector {
+            width: 20px;
+            position: relative;
+        }
+
+        /* Left side connectors (pointing right) */
+        .connector-left-r16-qf {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .connector-line-group {
+            position: relative;
+            height: 56px;
+        }
+
+        .connector-line-group::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 50%;
+            width: 1px;
+            background: var(--line-color);
+        }
+
+        .connector-line-group::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            bottom: 0;
+            width: 1px;
+            background: var(--line-color);
+        }
+
+        .connector-h-line {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: var(--line-color);
+        }
+
+        /* Simplified connector approach */
+        .round-spacer { width: 16px; }
+
+        .line-h {
+            width: 16px;
+            height: 1px;
+            background: var(--line-color);
+        }
+
+        .line-v {
+            width: 1px;
+            background: var(--line-color);
+        }
+
+        /* Final box */
+        .bracket-final-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bracket-final-box .bracket-match-box {
+            width: 100px;
+            border-color: var(--accent-gold);
+            border-width: 2px;
+        }
+
+        .bracket-final-box .bracket-match-box.completed {
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .final-trophy {
+            font-size: 20px;
+            margin-top: 6px;
+        }
+
+        /* Progress */
+        .bracket-progress { margin-top: 16px; text-align: center; }
+        .bracket-progress-text { font-size: 12px; color: var(--text-muted); }
+        .bracket-progress-text strong { color: var(--text-dark); }
+
+        .bracket-progress-bar {
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 8px;
+            max-width: 240px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+
+        .bracket-progress-fill {
+            height: 100%;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* Results Screen */
+        .results-screen { padding: 30px 20px; max-width: 1000px; margin: 0 auto; }
+
+        .results-intro { text-align: center; margin-bottom: 24px; }
+        .results-intro h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px); margin-bottom: 6px; }
+        .results-intro p { font-size: 15px; color: var(--text-muted); }
+
+        .final-bracket-section {
+            background: var(--bg-light);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .results-section {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .results-section-title {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+
+        .your-winner { display: flex; align-items: center; gap: 16px; }
+        .your-winner .winner-info .winner-name { font-family: 'Playfair Display', serif; font-size: 24px; }
+        .your-winner .winner-info .winner-ticker { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+
+        .market-favorite { display: flex; align-items: center; gap: 16px; }
+        .market-favorite .favorite-info .favorite-name { font-family: 'Playfair Display', serif; font-size: 20px; }
+        .market-favorite .favorite-info .favorite-ticker { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+        .market-favorite .favorite-percent { font-family: 'Playfair Display', serif; font-size: 24px; margin-left: auto; }
+
+        .rankings-table { width: 100%; border-collapse: collapse; }
+        .rankings-table th { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; text-align: left; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+        .rankings-table th:last-child { text-align: right; }
+        .rankings-table td { padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.04); vertical-align: middle; }
+        .rankings-table tr:last-child td { border-bottom: none; }
+
+        .rank-position { font-size: 13px; font-weight: 600; color: var(--text-muted); width: 28px; }
+        .rank-position.top-1, .rank-position.top-2, .rank-position.top-3 { color: var(--text-dark); }
+
+        .rank-coin { display: flex; align-items: center; gap: 10px; }
+        .rank-coin-name { font-weight: 500; font-size: 13px; }
+        .rank-coin-ticker { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+        .rank-wins { font-size: 13px; font-weight: 600; text-align: right; }
+
+        .cta-section {
+            text-align: center;
+            padding: 40px 24px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            margin-top: 24px;
+        }
+
+        .cta-title { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 32px); margin-bottom: 6px; }
+        .cta-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 12px 28px;
+            background: var(--text-dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+        }
+
+        .cta-btn:hover { background: #333; transform: translateY(-1px); }
+        .cta-btn svg { width: 14px; height: 14px; }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .tournament-bracket { transform: scale(0.85); transform-origin: top center; min-width: 800px; }
+        }
+
+        @media (max-width: 700px) {
+            .vs-container { flex-direction: column; gap: 14px; }
+            .coin-card { width: 100%; max-width: 260px; }
+            .tournament-bracket { transform: scale(0.65); min-width: 700px; }
+            header { padding: 14px 20px; flex-direction: column; gap: 6px; }
+            .your-winner, .market-favorite { flex-direction: column; text-align: center; }
+            .market-favorite .favorite-percent { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Powered by <span>PreDiva</span></div>
+        <div class="round-indicator" id="roundIndicator"></div>
+    </header>
+
+    <div class="container">
+        <!-- Intro Screen -->
+        <div class="screen active" id="introScreen">
+            <div class="intro-screen">
+                <div class="hero-visual">
+                    <div class="hero-coin left">🦴</div>
+                    <div class="hero-vs">vs</div>
+                    <div class="hero-coin right">😺</div>
+                    <div class="hero-trophy">🏆</div>
+                </div>
+
+                <h1 class="intro-title">Memecoin Playoffs</h1>
+                <p class="intro-subtitle">Who Pumps +50% First?</p>
+                
+                <p class="intro-description">
+                    Test your conviction. In 15 head-to-head matchups, choose which memecoin you believe will outperform—then see how your picks compare to the collective wisdom of all participants.
+                </p>
+                
+                <p class="intro-subtext">
+                    Every choice shapes your personal bracket <em>and</em> contributes to a live sentiment ranking. Benchmark your analysis against the market.
+                </p>
+
+                <div class="intro-features">
+                    <div class="intro-feature"><div class="intro-feature-icon">🎯</div><span>Your picks, your bracket</span></div>
+                    <div class="intro-feature"><div class="intro-feature-icon">📊</div><span>Compare vs. market</span></div>
+                    <div class="intro-feature"><div class="intro-feature-icon">🏆</div><span>Crown your champion</span></div>
+                </div>
+
+                <button class="start-btn" onclick="startPlayoffs()">Start the Tournament</button>
+            </div>
+        </div>
+
+        <!-- Match Screen -->
+        <div class="screen" id="matchScreen">
+            <div class="match-screen">
+                <div class="match-header">
+                    <div class="match-round" id="matchRound">Round of 16</div>
+                    <h2 class="match-title">Pick your winner</h2>
+                    <div class="match-number" id="matchNumber">Match 1 of 8</div>
+                </div>
+
+                <div class="vs-container" id="vsContainer"></div>
+
+                <div class="bracket-section">
+                    <div class="bracket-title">Tournament Bracket</div>
+                    <div class="tournament-bracket" id="tournamentBracket"></div>
+                    <div class="bracket-progress">
+                        <div class="bracket-progress-text"><strong id="progressCount">0</strong> of 15 matches completed</div>
+                        <div class="bracket-progress-bar"><div class="bracket-progress-fill" id="progressFill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="screen" id="resultsScreen">
+            <div class="results-screen">
+                <div class="results-intro">
+                    <h1>Your Champion</h1>
+                    <p>See how your conviction stacks up against the crowd</p>
+                </div>
+
+                <div class="final-bracket-section">
+                    <div class="bracket-title">Your Final Bracket</div>
+                    <div class="tournament-bracket" id="finalTournamentBracket"></div>
+                </div>
+
+                <div class="results-section">
+                    <div class="results-section-title">Your Winner</div>
+                    <div class="your-winner" id="yourWinner"></div>
+                </div>
+
+                <div class="results-section">
+                    <div class="results-section-title">Market Favorite</div>
+                    <div class="market-favorite" id="marketFavorite"></div>
+                </div>
+
+                <div class="results-section">
+                    <div class="results-section-title">Collective Sentiment Rankings</div>
+                    <table class="rankings-table">
+                        <thead><tr><th>#</th><th>Coin</th><th style="text-align:right">Total Wins</th></tr></thead>
+                        <tbody id="rankingsBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="cta-section">
+                    <h2 class="cta-title">Predict the next memecoin breakout</h2>
+                    <p class="cta-subtitle">Turn your market conviction into real predictions</p>
+                    <a href="https://prediva.com/" class="cta-btn" target="_blank">
+                        Start on PreDiva
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const memecoins = [
+            { id: 1, name: "Dogwifhat", ticker: "WIF", logo: "https://assets.coingecko.com/coins/images/33566/standard/dogwifhat.jpg", emoji: "🎩", price: "$2.34", change: "+156.7%", volume: "$1.8B", sentiment: 92 },
+            { id: 2, name: "Pepecoin", ticker: "PEPE", logo: "https://assets.coingecko.com/coins/images/29850/standard/pepe-token.jpeg", emoji: "🐸", price: "$0.0000124", change: "+45.6%", volume: "$2.1B", sentiment: 85 },
+            { id: 3, name: "Bonk", ticker: "BONK", logo: "https://assets.coingecko.com/coins/images/28600/standard/bonk.jpg", emoji: "🦴", price: "$0.0000024", change: "+28.9%", volume: "$340M", sentiment: 74 },
+            { id: 4, name: "Mog Coin", ticker: "MOG", logo: "https://assets.coingecko.com/coins/images/31226/standard/mog.png", emoji: "😎", price: "$0.0000018", change: "+45.2%", volume: "$120M", sentiment: 71 },
+            { id: 5, name: "Floki", ticker: "FLOKI", logo: "https://assets.coingecko.com/coins/images/16746/standard/PNG_image.png", emoji: "⚔️", price: "$0.000018", change: "-3.2%", volume: "$156M", sentiment: 61 },
+            { id: 6, name: "Shiba Inu", ticker: "SHIB", logo: "https://assets.coingecko.com/coins/images/11939/standard/shiba.png", emoji: "🐕", price: "$0.0000089", change: "+8.2%", volume: "$890M", sentiment: 72 },
+            { id: 7, name: "Dogecoin", ticker: "DOGE", logo: "https://assets.coingecko.com/coins/images/5/standard/dogecoin.png", emoji: "🐶", price: "$0.082", change: "+12.4%", volume: "$1.2B", sentiment: 78 },
+            { id: 8, name: "Brett", ticker: "BRETT", logo: "https://assets.coingecko.com/coins/images/35529/standard/1000050750.png", emoji: "👦", price: "$0.089", change: "+89.4%", volume: "$560M", sentiment: 81 },
+            { id: 9, name: "Popcat", ticker: "POPCAT", logo: "https://assets.coingecko.com/coins/images/33760/standard/image.png", emoji: "😺", price: "$0.34", change: "+234.5%", volume: "$780M", sentiment: 88 },
+            { id: 10, name: "Slerf", ticker: "SLERF", logo: "https://assets.coingecko.com/coins/images/36243/standard/slerf.png", emoji: "🦥", price: "$0.23", change: "+67.8%", volume: "$245M", sentiment: 76 },
+            { id: 11, name: "Notcoin", ticker: "NOT", logo: "https://assets.coingecko.com/coins/images/36459/standard/notcoin.jpg", emoji: "🚫", price: "$0.0089", change: "+34.5%", volume: "$890M", sentiment: 69 },
+            { id: 12, name: "Book of Meme", ticker: "BOME", logo: "https://assets.coingecko.com/coins/images/36071/standard/bome.png", emoji: "📖", price: "$0.0089", change: "+67.3%", volume: "$420M", sentiment: 79 },
+            { id: 13, name: "Cat in a Dogs World", ticker: "MEW", logo: "https://assets.coingecko.com/coins/images/36436/standard/mew.png", emoji: "🐱", price: "$0.0067", change: "+123.4%", volume: "$230M", sentiment: 82 },
+            { id: 14, name: "Saga Meme", ticker: "SAGA", logo: "https://assets.coingecko.com/coins/images/35045/standard/saga.png", emoji: "⚡", price: "$1.45", change: "+56.7%", volume: "$167M", sentiment: 73 },
+            { id: 15, name: "Toshi", ticker: "TOSHI", logo: "https://assets.coingecko.com/coins/images/31126/standard/toshi.png", emoji: "🐕‍🦺", price: "$0.00023", change: "+34.5%", volume: "$67M", sentiment: 63 },
+            { id: 16, name: "GROK", ticker: "GROK", logo: "https://assets.coingecko.com/coins/images/33089/standard/grok.jpeg", emoji: "🤖", price: "$0.0034", change: "+89.2%", volume: "$312M", sentiment: 77 }
+        ];
+
+        let gameState = {
+            currentRound: 1, currentMatch: 0, totalMatches: 0,
+            leftR16: [], rightR16: [], leftQF: [], rightQF: [],
+            leftSF: null, rightSF: null, final: null,
+            winCounts: {}
+        };
+
+        memecoins.forEach(c => gameState.winCounts[c.id] = Math.floor(Math.random() * 1000) + 100);
+
+        function initializeBracket() {
+            const shuffled = [...memecoins].sort(() => Math.random() - 0.5);
+            gameState.leftR16 = []; gameState.rightR16 = [];
+            for (let i = 0; i < 8; i += 2) gameState.leftR16.push({ coin1: shuffled[i], coin2: shuffled[i+1], winner: null });
+            for (let i = 8; i < 16; i += 2) gameState.rightR16.push({ coin1: shuffled[i], coin2: shuffled[i+1], winner: null });
+            gameState.leftQF = [{ coin1: null, coin2: null, winner: null }, { coin1: null, coin2: null, winner: null }];
+            gameState.rightQF = [{ coin1: null, coin2: null, winner: null }, { coin1: null, coin2: null, winner: null }];
+            gameState.leftSF = { coin1: null, coin2: null, winner: null };
+            gameState.rightSF = { coin1: null, coin2: null, winner: null };
+            gameState.final = { coin1: null, coin2: null, winner: null };
+            gameState.currentRound = 1; gameState.currentMatch = 0; gameState.totalMatches = 0;
+        }
+
+        function getCurrentMatch() {
+            const { currentRound: r, currentMatch: m } = gameState;
+            if (r === 1) return m < 4 ? gameState.leftR16[m] : gameState.rightR16[m - 4];
+            if (r === 2) return m < 2 ? gameState.leftQF[m] : gameState.rightQF[m - 2];
+            if (r === 3) return m === 0 ? gameState.leftSF : gameState.rightSF;
+            return gameState.final;
+        }
+
+        function getMatchesInRound(r) { return [8, 4, 2, 1][r - 1]; }
+        function getRoundName(r) { return ['Round of 16', 'Quarterfinals', 'Semifinals', 'Final'][r - 1]; }
+
+        function startPlayoffs() {
+            initializeBracket();
+            showScreen('matchScreen');
+            renderMatch();
+            renderBracket('tournamentBracket');
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function renderMatch() {
+            const match = getCurrentMatch();
+            document.getElementById('matchRound').textContent = getRoundName(gameState.currentRound);
+            document.getElementById('matchNumber').textContent = `Match ${gameState.currentMatch + 1} of ${getMatchesInRound(gameState.currentRound)}`;
+            document.getElementById('roundIndicator').textContent = `${getRoundName(gameState.currentRound)} · Match ${gameState.currentMatch + 1}`;
+            document.getElementById('vsContainer').innerHTML = `${renderCoinCard(match.coin1)}<div class="vs-text">or</div>${renderCoinCard(match.coin2)}`;
+            document.querySelectorAll('.coin-card').forEach(card => card.addEventListener('click', () => selectWinner(parseInt(card.dataset.coinId))));
+            document.getElementById('progressCount').textContent = gameState.totalMatches;
+            document.getElementById('progressFill').style.width = `${(gameState.totalMatches / 15) * 100}%`;
+        }
+
+        function renderCoinImage(coin, size = 48) {
+            return `<div class="coin-img-wrapper" style="width:${size}px;height:${size}px;position:relative;">
+                <img src="${coin.logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onload="this.style.display='block';this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="coin-emoji-fallback" style="display:none;width:100%;height:100%;border-radius:50%;align-items:center;justify-content:center;font-size:${size*0.45}px;position:absolute;top:0;left:0;">${coin.emoji}</div>
+            </div>`;
+        }
+
+        function renderCoinCard(coin) {
+            const pos = coin.change.startsWith('+');
+            return `<div class="coin-card" data-coin-id="${coin.id}">
+                ${renderCoinImage(coin, 48)}
+                <div class="coin-name">${coin.name}</div>
+                <div class="coin-ticker">$${coin.ticker}</div>
+                <div class="coin-stats">
+                    <div class="coin-stat"><div class="stat-label">Price</div><div class="stat-value">${coin.price}</div></div>
+                    <div class="coin-stat"><div class="stat-label">24h</div><div class="stat-value ${pos ? 'positive' : 'negative'}">${coin.change}</div></div>
+                    <div class="coin-stat"><div class="stat-label">Volume</div><div class="stat-value">${coin.volume}</div></div>
+                    <div class="coin-stat"><div class="stat-label">Sentiment</div><div class="stat-value">${coin.sentiment}%</div></div>
+                </div>
+            </div>`;
+        }
+
+        function renderTeam(coin, status = '') {
+            if (!coin) return `<div class="bracket-team empty"><span>TBD</span></div>`;
+            return `<div class="bracket-team ${status}">
+                <div class="bracket-team-icon"><img src="${coin.logo}" onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><span style="display:none;">${coin.emoji}</span></div>
+                <span>${coin.ticker}</span>
+            </div>`;
+        }
+
+        function renderMatchBox(match, isCurrent = false) {
+            if (!match) return '<div class="bracket-match-box"></div>';
+            let c1 = '', c2 = '';
+            if (match.winner) {
+                c1 = match.coin1 && match.winner.id === match.coin1.id ? 'winner' : 'loser';
+                c2 = match.coin2 && match.winner.id === match.coin2.id ? 'winner' : 'loser';
+            }
+            return `<div class="bracket-match-box ${isCurrent ? 'current' : ''} ${match.winner ? 'completed' : ''}">
+                ${renderTeam(match.coin1, c1)}${renderTeam(match.coin2, c2)}
+            </div>`;
+        }
+
+        function isCurrent(r, m) { return gameState.currentRound === r && gameState.currentMatch === m; }
+
+        function renderBracket(targetId) {
+            // Build classic bracket: Left R16 -> QF -> SF -> FINAL <- SF <- QF <- R16 Right
+            const html = `
+                <div style="display:flex;align-items:center;">
+                    <!-- LEFT R16 -->
+                    <div class="bracket-round bracket-round-r16">
+                        <div class="bracket-round-header">R16</div>
+                        ${gameState.leftR16.map((m, i) => renderMatchBox(m, isCurrent(1, i))).join('')}
+                    </div>
+                    <!-- Lines R16->QF left -->
+                    <div style="display:flex;flex-direction:column;justify-content:space-around;height:240px;">
+                        ${[0,1,2,3].map(i => `<div style="display:flex;align-items:center;height:56px;">
+                            <div style="width:12px;height:1px;background:var(--line-color);"></div>
+                            ${i % 2 === 0 ? `<div style="width:1px;height:56px;background:var(--line-color);position:relative;"><div style="position:absolute;top:50%;right:0;width:12px;height:1px;background:var(--line-color);"></div></div>` : `<div style="width:1px;height:0;"></div>`}
+                        </div>`).join('')}
+                    </div>
+                    <!-- LEFT QF -->
+                    <div class="bracket-round bracket-round-qf">
+                        <div class="bracket-round-header">QF</div>
+                        ${gameState.leftQF.map((m, i) => renderMatchBox(m, isCurrent(2, i))).join('')}
+                    </div>
+                    <!-- Lines QF->SF left -->
+                    <div style="display:flex;flex-direction:column;justify-content:space-around;height:240px;">
+                        <div style="display:flex;align-items:center;height:120px;">
+                            <div style="width:12px;height:1px;background:var(--line-color);"></div>
+                            <div style="width:1px;height:100px;background:var(--line-color);position:relative;"><div style="position:absolute;top:50%;width:12px;height:1px;background:var(--line-color);"></div></div>
+                        </div>
+                    </div>
+                    <!-- LEFT SF -->
+                    <div class="bracket-round bracket-round-sf">
+                        <div class="bracket-round-header">SF</div>
+                        ${renderMatchBox(gameState.leftSF, isCurrent(3, 0))}
+                    </div>
+                    <!-- Line SF->Final left -->
+                    <div style="width:20px;height:1px;background:var(--line-color);"></div>
+                    
+                    <!-- FINAL -->
+                    <div class="bracket-final-box">
+                        <div class="bracket-round-header" style="color:var(--accent-gold);">🏆 FINAL</div>
+                        ${renderMatchBox(gameState.final, isCurrent(4, 0))}
+                        ${gameState.final.winner ? '<div class="final-trophy">👑</div>' : ''}
+                    </div>
+                    
+                    <!-- Line Final->SF right -->
+                    <div style="width:20px;height:1px;background:var(--line-color);"></div>
+                    <!-- RIGHT SF -->
+                    <div class="bracket-round bracket-round-sf">
+                        <div class="bracket-round-header">SF</div>
+                        ${renderMatchBox(gameState.rightSF, isCurrent(3, 1))}
+                    </div>
+                    <!-- Lines SF->QF right -->
+                    <div style="display:flex;flex-direction:column;justify-content:space-around;height:240px;">
+                        <div style="display:flex;align-items:center;height:120px;">
+                            <div style="width:1px;height:100px;background:var(--line-color);position:relative;"><div style="position:absolute;top:50%;right:0;width:12px;height:1px;background:var(--line-color);"></div></div>
+                            <div style="width:12px;height:1px;background:var(--line-color);"></div>
+                        </div>
+                    </div>
+                    <!-- RIGHT QF -->
+                    <div class="bracket-round bracket-round-qf">
+                        <div class="bracket-round-header">QF</div>
+                        ${gameState.rightQF.map((m, i) => renderMatchBox(m, isCurrent(2, i + 2))).join('')}
+                    </div>
+                    <!-- Lines QF->R16 right -->
+                    <div style="display:flex;flex-direction:column;justify-content:space-around;height:240px;">
+                        ${[0,1,2,3].map(i => `<div style="display:flex;align-items:center;height:56px;">
+                            ${i % 2 === 1 ? `<div style="width:1px;height:56px;background:var(--line-color);position:relative;"><div style="position:absolute;top:50%;width:12px;height:1px;background:var(--line-color);"></div></div>` : `<div style="width:1px;height:0;"></div>`}
+                            <div style="width:12px;height:1px;background:var(--line-color);"></div>
+                        </div>`).join('')}
+                    </div>
+                    <!-- RIGHT R16 -->
+                    <div class="bracket-round bracket-round-r16">
+                        <div class="bracket-round-header">R16</div>
+                        ${gameState.rightR16.map((m, i) => renderMatchBox(m, isCurrent(1, i + 4))).join('')}
+                    </div>
+                </div>
+            `;
+            document.getElementById(targetId).innerHTML = html;
+        }
+
+        function selectWinner(coinId) {
+            const match = getCurrentMatch();
+            const winner = match.coin1.id === coinId ? match.coin1 : match.coin2;
+            match.winner = winner;
+            gameState.totalMatches++;
+            gameState.winCounts[winner.id]++;
+            advanceWinner(winner);
+            renderBracket('tournamentBracket');
+            setTimeout(() => advanceToNextMatch(winner), 180);
+        }
+
+        function advanceWinner(winner) {
+            const { currentRound: r, currentMatch: m } = gameState;
+            if (r === 1) {
+                if (m < 4) { const qi = Math.floor(m / 2); if (m % 2 === 0) gameState.leftQF[qi].coin1 = winner; else gameState.leftQF[qi].coin2 = winner; }
+                else { const adj = m - 4, qi = Math.floor(adj / 2); if (adj % 2 === 0) gameState.rightQF[qi].coin1 = winner; else gameState.rightQF[qi].coin2 = winner; }
+            } else if (r === 2) {
+                if (m < 2) { if (m === 0) gameState.leftSF.coin1 = winner; else gameState.leftSF.coin2 = winner; }
+                else { if (m === 2) gameState.rightSF.coin1 = winner; else gameState.rightSF.coin2 = winner; }
+            } else if (r === 3) {
+                if (m === 0) gameState.final.coin1 = winner; else gameState.final.coin2 = winner;
+            }
+        }
+
+        function advanceToNextMatch(winner) {
+            gameState.currentMatch++;
+            if (gameState.currentMatch >= getMatchesInRound(gameState.currentRound)) {
+                if (gameState.currentRound < 4) { gameState.currentRound++; gameState.currentMatch = 0; renderMatch(); renderBracket('tournamentBracket'); }
+                else showResults(winner);
+            } else { renderMatch(); renderBracket('tournamentBracket'); }
+        }
+
+        function renderSmallCoinImage(coin, size = 32) {
+            return `<div style="width:${size}px;height:${size}px;position:relative;flex-shrink:0;">
+                <img src="${coin.logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.1);" onload="this.style.display='block';this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div style="display:none;width:100%;height:100%;border-radius:50%;background:white;border:2px solid #eee;align-items:center;justify-content:center;font-size:${size*0.5}px;position:absolute;top:0;left:0;">${coin.emoji}</div>
+            </div>`;
+        }
+
+        function showResults(champion) {
+            showScreen('resultsScreen');
+            document.getElementById('roundIndicator').textContent = 'Results';
+            renderBracket('finalTournamentBracket');
+
+            document.getElementById('yourWinner').innerHTML = `
+                <div style="width:56px;height:56px;position:relative;flex-shrink:0;">
+                    <img src="${champion.logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #1a1a1a;box-shadow:0 4px 12px rgba(0,0,0,0.12);" onload="this.style.display='block';this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div style="display:none;width:100%;height:100%;border-radius:50%;background:#f5f5f5;border:3px solid #1a1a1a;align-items:center;justify-content:center;font-size:28px;position:absolute;top:0;left:0;">${champion.emoji}</div>
+                </div>
+                <div class="winner-info"><div class="winner-name">${champion.name}</div><div class="winner-ticker">$${champion.ticker}</div></div>`;
+
+            const fav = memecoins[Math.floor(Math.random() * memecoins.length)];
+            const pct = (Math.random() * 20 + 15).toFixed(1);
+            document.getElementById('marketFavorite').innerHTML = `
+                <div style="width:46px;height:46px;position:relative;flex-shrink:0;">
+                    <img src="${fav.logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #e5e5e5;" onload="this.style.display='block';this.nextElementSibling.style.display='none';" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <div style="display:none;width:100%;height:100%;border-radius:50%;background:#f5f5f5;border:2px solid #e5e5e5;align-items:center;justify-content:center;font-size:22px;position:absolute;top:0;left:0;">${fav.emoji}</div>
+                </div>
+                <div class="favorite-info"><div class="favorite-name">${fav.name}</div><div class="favorite-ticker">$${fav.ticker}</div></div>
+                <div class="favorite-percent">${pct}%</div>`;
+
+            const rankings = memecoins.map(c => ({ ...c, wins: gameState.winCounts[c.id] })).sort((a, b) => b.wins - a.wins);
+            document.getElementById('rankingsBody').innerHTML = rankings.map((c, i) => `
+                <tr><td class="rank-position ${i < 3 ? 'top-' + (i + 1) : ''}">${i + 1}</td>
+                <td><div class="rank-coin">${renderSmallCoinImage(c, 28)}<div><div class="rank-coin-name">${c.name}</div><div class="rank-coin-ticker">$${c.ticker}</div></div></div></td>
+                <td class="rank-wins">${c.wins.toLocaleString()}</td></tr>`).join('');
+        }
+    </script>
+</body>
+</html>
